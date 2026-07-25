@@ -1,77 +1,76 @@
 import React from "react";
-import {
-  ClipboardList,
-  Clock3,
-  CircleCheckBig,
-  CircleX
-} from "lucide-react";
 
 
-const TaskNumber = ({ data }) => {
+const TaskNumber=({data})=>{
 
-  const cards = [
-    {
-      title: "New Tasks",
-      value: data.taskNumber.newTask,
-      icon: <ClipboardList size={30} />,
-      color: "bg-blue-600"
-    },
-    {
-      title: "Active Tasks",
-      value: data.taskNumber.active,
-      icon: <Clock3 size={30} />,
-      color: "bg-yellow-500"
-    },
-    {
-      title: "Completed",
-      value: data.taskNumber.completed,
-      icon: <CircleCheckBig size={30} />,
-      color: "bg-green-600"
-    },
-    {
-      title: "Failed",
-      value: data.taskNumber.failed,
-      icon: <CircleX size={30} />,
-      color: "bg-red-600"
-    }
-  ];
 
-  return (
-    <div className="grid grid-cols-1 gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-4">
+return(
 
-      {cards.map((card, index) => (
+<div className="grid grid-cols-4 gap-5 mt-8">
 
-        <div
-          key={index}
-          className={`${card.color} rounded-2xl p-6 shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-2xl`}
-        >
 
-          <div className="flex items-center justify-between">
+<div className="bg-blue-600 p-5 rounded">
 
-            <div>
+<h1 className="text-3xl">
 
-              <h2 className="text-4xl font-bold">
-                {card.value}
-              </h2>
+{data.taskNumber.newTask}
 
-              <p className="mt-2 text-lg font-medium">
-                {card.title}
-              </p>
+</h1>
 
-            </div>
+<p>New Task</p>
 
-            <div className="rounded-full bg-white/20 p-3">
-              {card.icon}
-            </div>
+</div>
 
-          </div>
 
-        </div>
 
-      ))}
+<div className="bg-yellow-500 p-5 rounded">
 
-    </div>
-  );
-};
+<h1 className="text-3xl">
+
+{data.taskNumber.active}
+
+</h1>
+
+<p>Active</p>
+
+</div>
+
+
+
+
+<div className="bg-green-600 p-5 rounded">
+
+<h1 className="text-3xl">
+
+{data.taskNumber.completed}
+
+</h1>
+
+<p>Completed</p>
+
+</div>
+
+
+
+<div className="bg-red-600 p-5 rounded">
+
+<h1 className="text-3xl">
+
+{data.taskNumber.failed}
+
+</h1>
+
+<p>Failed</p>
+
+</div>
+
+
+
+</div>
+
+)
+
+}
+
 
 export default TaskNumber;

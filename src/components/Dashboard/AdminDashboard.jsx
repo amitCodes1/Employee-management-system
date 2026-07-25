@@ -33,8 +33,7 @@ const AdminDashboard = ({ changeUser }) => {
   return (
     <div className="min-h-screen bg-[#111827] p-8 text-white">
 
-      <Header changeUser={changeUser} />
-
+<Header />
       <div className="mt-8 grid grid-cols-5 gap-5">
 
         <div className="rounded-xl bg-indigo-600 p-5">

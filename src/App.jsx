@@ -1,122 +1,156 @@
-import React, { useContext, useEffect, useState } from "react";
-import Login from "./components/Auth/Login";
-import { AuthContext } from "./context/AuthProvider";
-import { getLocalStorage } from "./utils/localStorage";
+import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+
+import RoleSelection from "./pages/RoleSelection";
+
+import AdminLogin from "./pages/AdminLogin";
+import EmployeeLogin from "./pages/EmployeeLogin";
+
+
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
-import EmployeeDashboard from "./components/Employee/EmployeeDashboard";
+import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 
-const App = () => {
-
-  const [userData] = useContext(AuthContext);
-
-  const [user, setUser] = useState(null);
-  const [loggedUserData, setLoggedUserData] = useState(null);
+import LoginRoute from "./routes/LoginRoute";
 
 
-  useEffect(() => {
-
-    const loggedUser = localStorage.getItem("loggedInUser");
-
-    if (loggedUser) {
-      const data = JSON.parse(loggedUser);
-
-      setUser({
-        role: data.role
-      });
-
-      setLoggedUserData(data.data);
-    }
-
-  }, []);
+function App() {
 
 
-  const handleLogin = (email, password) => {
-
-    const { admin } = getLocalStorage();
+  const [loggedUser, setLoggedUser] = useState(null);
 
 
-    const adminUser = admin.find(
-      (user) =>
-        user.email === email &&
-        user.password === password
-    );
+
+  // refresh ke baad user ko wapas load karega
+
+  useEffect(()=>{
 
 
-    if (adminUser) {
+    const user = localStorage.getItem("loggedInUser");
 
-      setUser({
-        role: "admin"
-      });
 
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({
-          role: "admin"
-        })
-      );
+    if(user){
 
-      return;
+      setLoggedUser(JSON.parse(user));
+
     }
 
 
-
-    const employee = userData.find(
-      (user) =>
-        user.email === email &&
-        user.password === password
-    );
+  },[]);
 
 
-    if (employee) {
 
-      setUser({
-        role: "employee"
-      });
-
-      setLoggedUserData(employee);
-
-
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({
-          role: "employee",
-          data: employee
-        })
-      );
-
-      return;
-    }
-
-
-    alert("Invalid Email or Password");
-
-  };
 
 
   return (
 
-    <>
-      {!user && (
-        <Login handleLogin={handleLogin} />
-      )}
+    <Routes>
 
 
-     {user?.role === "admin" && (
-  <AdminDashboard changeUser={setUser} />
-)}
+      <Route
+        path="/"
+        element={<RoleSelection/>}
+      />
 
 
-      {user?.role === "employee" && (
-  <EmployeeDashboard
-    data={loggedUserData}
-    changeUser={setUser}
-  />
-)}
 
-    </>
+      <Route
+        path="/admin-login"
+        element={
+          <AdminLogin
+            setLoggedUser={setLoggedUser}
+          />
+        }
+      />
+
+
+
+      <Route
+        path="/employee-login"
+        element={
+          <EmployeeLogin
+            setLoggedUser={setLoggedUser}
+          />
+        }
+      />
+
+
+
+
+      <Route
+        path="/admin"
+        element={
+          loggedUser ?
+          <AdminDashboard/>
+          :
+          <AdminLogin setLoggedUser={setLoggedUser}/>
+        }
+      />
+
+
+
+
+      <Route
+        path="/employee"
+        element={
+
+          loggedUser ?
+
+          <EmployeeDashboard
+            data={loggedUser}
+            changeUser={setLoggedUser}
+          />
+
+          :
+
+          <EmployeeLogin
+            setLoggedUser={setLoggedUser}
+          />
+
+        }
+      />
+      <Route
+
+path="/admin-login"
+
+element={
+
+<LoginRoute>
+
+<AdminLogin 
+setLoggedUser={setLoggedUser}
+/>
+
+</LoginRoute>
+
+}
+
+/>
+<Route
+
+path="/employee-login"
+
+element={
+
+<LoginRoute>
+
+<EmployeeLogin
+setLoggedUser={setLoggedUser}
+/>
+
+</LoginRoute>
+
+}
+
+/>
+
+
+
+    </Routes>
 
   );
-};
+
+}
 
 
 export default App;
