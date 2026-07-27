@@ -4,46 +4,48 @@ import Header from "../Employee/Header";
 import TaskNumber from "../Employee/TaskNumber";
 import OwnerTaskList from "../Employee/TaskList/OwnerTaskList";
 
-
 const EmployeeDashboard = ({ data, changeUser }) => {
-
   const [employeeData, setEmployeeData] = useState(data);
-
 
   useEffect(() => {
     setEmployeeData(data);
   }, [data]);
 
-
   if (!employeeData) {
     return (
-      <div className="min-h-screen bg-[#111827] flex items-center justify-center text-white text-3xl">
-        Loading employee data...
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white text-center">
+          Loading Employee Data...
+        </h1>
       </div>
     );
   }
 
-
   return (
-    <div className="min-h-screen bg-[#111827] p-8 text-white">
+    <div className="min-h-screen bg-slate-900 text-white">
 
-      <Header
-        data={employeeData}
-        changeUser={changeUser}
-      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-      <TaskNumber
-        data={employeeData}
-      />
+        <Header
+          data={employeeData}
+          changeUser={changeUser}
+        />
 
-      <OwnerTaskList
-        data={employeeData}
-        setData={setEmployeeData}
-      />
+        <div className="mt-8">
+          <TaskNumber data={employeeData} />
+        </div>
+
+        <div className="mt-8">
+          <OwnerTaskList
+            data={employeeData}
+            setData={setEmployeeData}
+          />
+        </div>
+
+      </div>
 
     </div>
   );
 };
-
 
 export default EmployeeDashboard;

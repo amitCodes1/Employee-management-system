@@ -1,16 +1,19 @@
 import React, { useContext } from "react";
 import NewTask from "./NewTask";
 import AcceptTask from "./AcceptTask";
+import CompleteTask from "./CompleteTask";
+import FailedTask from "./FailedTask";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const OwnerTaskList = ({ data, setData }) => {
   const [employees, setEmployees] = useContext(AuthContext);
 
-  // Prevent app crash
   if (!data || !data.tasks) {
     return (
-      <div className="mt-10 text-center text-gray-400">
-        No Tasks Available
+      <div className="mt-10 flex items-center justify-center rounded-xl bg-slate-800 py-12">
+        <h2 className="text-xl text-gray-400">
+          No Tasks Available
+        </h2>
       </div>
     );
   }
@@ -20,37 +23,41 @@ const OwnerTaskList = ({ data, setData }) => {
       if (i === index) {
         return {
           ...task,
-          status: status,
+          status,
         };
       }
+
       return task;
     });
 
-    const updatedUser = {
+    const updatedEmployee = {
       ...data,
       tasks: updatedTasks,
     };
 
-    setData(updatedUser);
+    setData(updatedEmployee);
 
     const updatedEmployees = employees.map((employee) => {
       if (employee.id === data.id) {
-        return updatedUser;
+        return updatedEmployee;
       }
+
       return employee;
     });
 
     setEmployees(updatedEmployees);
 
     localStorage.setItem(
-      "emsEmployees",
+      "emsemployees",
       JSON.stringify(updatedEmployees)
     );
   };
 
   return (
-    <div className="mt-10 flex gap-5 overflow-x-auto pb-5">
+    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+
       {data.tasks.map((task, index) => {
+
         if (task.status === "new") {
           return (
             <NewTask
@@ -72,8 +79,27 @@ const OwnerTaskList = ({ data, setData }) => {
           );
         }
 
+        if (task.status === "completed") {
+          return (
+            <CompleteTask
+              key={index}
+              data={task}
+            />
+          );
+        }
+
+        if (task.status === "failed") {
+          return (
+            <FailedTask
+              key={index}
+              data={task}
+            />
+          );
+        }
+
         return null;
       })}
+
     </div>
   );
 };

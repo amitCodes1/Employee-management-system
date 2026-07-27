@@ -1,76 +1,51 @@
 import React from "react";
 
+const TaskNumber = ({ data }) => {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
 
-const TaskNumber=({data})=>{
+      <div className="bg-blue-600 rounded-2xl p-6 shadow-lg hover:scale-105 transition duration-300">
+        <h1 className="text-4xl font-bold">
+          {data?.taskNumber?.newTask}
+        </h1>
 
+        <p className="mt-2 text-lg font-medium">
+          New Task
+        </p>
+      </div>
 
-return(
+      <div className="bg-yellow-500 rounded-2xl p-6 shadow-lg hover:scale-105 transition duration-300">
+        <h1 className="text-4xl font-bold">
+          {data?.taskNumber?.active}
+        </h1>
 
-<div className="grid grid-cols-4 gap-5 mt-8">
+        <p className="mt-2 text-lg font-medium">
+          Active Task
+        </p>
+      </div>
 
+      <div className="bg-green-600 rounded-2xl p-6 shadow-lg hover:scale-105 transition duration-300">
+        <h1 className="text-4xl font-bold">
+          {data?.taskNumber?.completed}
+        </h1>
 
-<div className="bg-blue-600 p-5 rounded">
+        <p className="mt-2 text-lg font-medium">
+          Completed
+        </p>
+      </div>
 
-<h1 className="text-3xl">
+      <div className="bg-red-600 rounded-2xl p-6 shadow-lg hover:scale-105 transition duration-300">
+        <h1 className="text-4xl font-bold">
+          {data?.taskNumber?.failed}
+        </h1>
 
-{data.taskNumber.newTask}
+        <p className="mt-2 text-lg font-medium">
+          Failed
+        </p>
+      </div>
 
-</h1>
-
-<p>New Task</p>
-
-</div>
-
-
-
-<div className="bg-yellow-500 p-5 rounded">
-
-<h1 className="text-3xl">
-
-{data.taskNumber.active}
-
-</h1>
-
-<p>Active</p>
-
-</div>
-
-
-
-
-<div className="bg-green-600 p-5 rounded">
-
-<h1 className="text-3xl">
-
-{data.taskNumber.completed}
-
-</h1>
-
-<p>Completed</p>
-
-</div>
-
-
-
-<div className="bg-red-600 p-5 rounded">
-
-<h1 className="text-3xl">
-
-{data.taskNumber.failed}
-
-</h1>
-
-<p>Failed</p>
-
-</div>
-
-
-
-</div>
-
-)
-
-}
-
+    </div>
+  );
+};
 
 export default TaskNumber;

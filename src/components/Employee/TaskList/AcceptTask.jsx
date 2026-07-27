@@ -2,42 +2,42 @@ import React from "react";
 
 const AcceptTask = ({ data, completeTask, failTask }) => {
   return (
-    <div className="min-w-[340px] rounded-2xl bg-[#f59e0b] p-6 shadow-xl transition duration-300 hover:-translate-y-2">
+    <div className="w-full rounded-2xl bg-yellow-500 p-6 shadow-xl hover:shadow-2xl transition duration-300">
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
 
-        <span className="rounded-full bg-white/20 px-3 py-1 text-sm">
+        <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
           {data.category}
         </span>
 
-        <span className="text-sm">
+        <span className="text-sm text-white">
           {data.date}
         </span>
 
       </div>
 
-      <h2 className="mt-6 text-2xl font-bold">
+      <h2 className="mt-5 text-2xl font-bold break-words">
         {data.title}
       </h2>
 
-      <p className="mt-3 leading-6">
+      <p className="mt-3 leading-7 break-words">
         {data.description}
       </p>
 
-      <div className="mt-8 flex gap-3">
+      <div className="mt-8 flex flex-col sm:flex-row gap-3">
 
         <button
           onClick={completeTask}
-          className="flex-1 rounded-lg bg-green-600 py-3 font-semibold transition hover:bg-green-700"
+          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
         >
-          Complete
+          Mark as Completed
         </button>
 
         <button
           onClick={failTask}
-          className="flex-1 rounded-lg bg-red-600 py-3 font-semibold transition hover:bg-red-700"
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition"
         >
-          Failed
+          Mark as Failed
         </button>
 
       </div>
