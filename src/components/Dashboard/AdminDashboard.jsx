@@ -4,8 +4,8 @@ import CreateTask from "../Admin/CreateTask";
 import AllTask from "../Admin/AllTask";
 import { AuthContext } from "../../context/AuthProvider";
 import EmployeeList from "../Admin/EmployeeList";
-const AdminDashboard = ({ changeUser }) => {
 
+const AdminDashboard = ({ setLoggedUser }) => {
   const [employees] = useContext(AuthContext);
 
   const totalEmployees = employees.length;
@@ -32,10 +32,9 @@ const AdminDashboard = ({ changeUser }) => {
 
   return (
     <div className="min-h-screen bg-[#111827] p-8 text-white">
+      <Header setLoggedUser={setLoggedUser} />
 
-<Header />
       <div className="mt-8 grid grid-cols-5 gap-5">
-
         <div className="rounded-xl bg-indigo-600 p-5">
           <h2 className="text-3xl font-bold">{totalEmployees}</h2>
           <p className="mt-2">Employees</p>
@@ -60,15 +59,11 @@ const AdminDashboard = ({ changeUser }) => {
           <h2 className="text-3xl font-bold">{totalFailed}</h2>
           <p className="mt-2">Failed</p>
         </div>
-
       </div>
 
       <CreateTask />
-
-<AllTask />
-
-<EmployeeList />
-
+      <AllTask />
+      <EmployeeList />
     </div>
   );
 };

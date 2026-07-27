@@ -18,31 +18,44 @@ const OwnerTaskList = ({ data, setData }) => {
     );
   }
 
-  const updateTask = (index, status) => {
-    const updatedTasks = data.tasks.map((task, i) => {
-      if (i === index) {
+  const updateTask = (taskIndex, newStatus) => {
+
+    const updatedTasks = data.tasks.map((task, index) => {
+
+      if (index === taskIndex) {
         return {
           ...task,
-          status,
+          status: newStatus,
         };
       }
 
       return task;
+
     });
+
+    const updatedTaskNumber = {
+      newTask: updatedTasks.filter(task => task.status === "new").length,
+      active: updatedTasks.filter(task => task.status === "active").length,
+      completed: updatedTasks.filter(task => task.status === "completed").length,
+      failed: updatedTasks.filter(task => task.status === "failed").length,
+    };
 
     const updatedEmployee = {
       ...data,
       tasks: updatedTasks,
+      taskNumber: updatedTaskNumber,
     };
 
     setData(updatedEmployee);
 
     const updatedEmployees = employees.map((employee) => {
-      if (employee.id === data.id) {
+
+      if (employee.id === updatedEmployee.id) {
         return updatedEmployee;
       }
 
       return employee;
+
     });
 
     setEmployees(updatedEmployees);
@@ -51,6 +64,27 @@ const OwnerTaskList = ({ data, setData }) => {
       "emsemployees",
       JSON.stringify(updatedEmployees)
     );
+
+    const loggedUser = JSON.parse(
+      localStorage.getItem("loggedInUser")
+    );
+
+    if (
+      loggedUser &&
+      loggedUser.role === "employee" &&
+      loggedUser.data.id === updatedEmployee.id
+    ) {
+
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify({
+          role: "employee",
+          data: updatedEmployee,
+        })
+      );
+
+    }
+
   };
 
   return (
@@ -98,6 +132,7 @@ const OwnerTaskList = ({ data, setData }) => {
         }
 
         return null;
+
       })}
 
     </div>

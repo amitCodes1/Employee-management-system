@@ -1,71 +1,28 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
+const Header = ({ data, setLoggedUser }) => {
+  const navigate = useNavigate();
 
-const Header=({data,changeUser})=>{
+  const logout = () => {
+    localStorage.removeItem("loggedInUser");
+    setLoggedUser(null);
+    navigate("/");
+  };
 
-
-const logout=()=>{
-
-
-sessionStorage.removeItem("loggedInUser");
-
-
-changeUser(null);
-
-
-window.location.href="/";
-
-
+  return (
+    <div className="flex items-center justify-between bg-slate-800 p-4 rounded-xl">
+      <h1 className="text-xl font-bold text-white">
+        Welcome, {data?.firstName}
+      </h1>
+      <button
+        onClick={logout}
+        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold"
+      >
+        Logout
+      </button>
+    </div>
+  );
 };
-
-
-
-return(
-
-
-<div className="flex justify-between items-center">
-
-
-<div>
-
-<h2 className="text-gray-400 text-xl">
-
-Hello,
-
-</h2>
-
-
-<h1 className="text-3xl font-bold">
-
-{data.firstName} 👋
-
-</h1>
-
-
-</div>
-
-
-
-<button
-
-onClick={logout}
-
-className="bg-red-600 px-5 py-2 rounded"
-
->
-
-Logout
-
-</button>
-
-
-
-</div>
-
-
-)
-
-}
-
 
 export default Header;

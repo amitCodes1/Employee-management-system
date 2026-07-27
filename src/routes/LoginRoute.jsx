@@ -1,39 +1,25 @@
 import { Navigate } from "react-router-dom";
 
-
-const LoginRoute = ({children}) => {
-
-
+const LoginRoute = ({ children }) => {
   const user = localStorage.getItem("loggedInUser");
 
-
-  // agar already login hai to dashboard bhej do
-
-  if(user){
-
-    const data = JSON.parse(user);
-
-
-    if(data.role === "admin"){
-
-      return <Navigate to="/admin" />;
-
-    }
-
-
-    return <Navigate to="/employee" />;
-
-
+  if (!user) {
+    return children;
   }
 
+  const loggedUser = JSON.parse(user);
 
+  if (loggedUser.role === "admin") {
+    return <Navigate to="/admin" replace />;
+  }
 
-  // login page allow
+  if (loggedUser.role === "employee") {
+    return <Navigate to="/employee" replace />;
+  }
+
+  localStorage.removeItem("loggedInUser");
 
   return children;
-
-
 };
-
 
 export default LoginRoute;

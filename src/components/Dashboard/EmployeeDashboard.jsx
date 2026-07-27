@@ -4,7 +4,7 @@ import Header from "../Employee/Header";
 import TaskNumber from "../Employee/TaskNumber";
 import OwnerTaskList from "../Employee/TaskList/OwnerTaskList";
 
-const EmployeeDashboard = ({ data, changeUser }) => {
+const EmployeeDashboard = ({ data, setLoggedUser }) => {
   const [employeeData, setEmployeeData] = useState(data);
 
   useEffect(() => {
@@ -23,12 +23,10 @@ const EmployeeDashboard = ({ data, changeUser }) => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
         <Header
           data={employeeData}
-          changeUser={changeUser}
+          setLoggedUser={setLoggedUser}
         />
 
         <div className="mt-8">
@@ -41,9 +39,7 @@ const EmployeeDashboard = ({ data, changeUser }) => {
             setData={setEmployeeData}
           />
         </div>
-
       </div>
-
     </div>
   );
 };

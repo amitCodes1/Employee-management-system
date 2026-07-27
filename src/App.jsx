@@ -15,7 +15,6 @@ function App() {
 
   useEffect(() => {
     const user = localStorage.getItem("loggedInUser");
-
     if (user) {
       setLoggedUser(JSON.parse(user));
     }
@@ -23,19 +22,13 @@ function App() {
 
   return (
     <Routes>
-
-      <Route
-        path="/"
-        element={<RoleSelection />}
-      />
+      <Route path="/" element={<RoleSelection />} />
 
       <Route
         path="/admin-login"
         element={
           <LoginRoute>
-            <AdminLogin
-              setLoggedUser={setLoggedUser}
-            />
+            <AdminLogin setLoggedUser={setLoggedUser} />
           </LoginRoute>
         }
       />
@@ -44,9 +37,7 @@ function App() {
         path="/employee-login"
         element={
           <LoginRoute>
-            <EmployeeLogin
-              setLoggedUser={setLoggedUser}
-            />
+            <EmployeeLogin setLoggedUser={setLoggedUser} />
           </LoginRoute>
         }
       />
@@ -54,14 +45,13 @@ function App() {
       <Route
         path="/admin"
         element={
-          loggedUser ? (
+          loggedUser?.role === "admin" ? (
             <AdminDashboard
-              changeUser={setLoggedUser}
-            />
-          ) : (
-            <AdminLogin
+              data={loggedUser.data}
               setLoggedUser={setLoggedUser}
             />
+          ) : (
+            <AdminLogin setLoggedUser={setLoggedUser} />
           )
         }
       />
@@ -69,15 +59,13 @@ function App() {
       <Route
         path="/employee"
         element={
-          loggedUser ? (
+          loggedUser?.role === "employee" ? (
             <EmployeeDashboard
-              data={loggedUser}
-              changeUser={setLoggedUser}
-            />
-          ) : (
-            <EmployeeLogin
+              data={loggedUser.data}
               setLoggedUser={setLoggedUser}
             />
+          ) : (
+            <EmployeeLogin setLoggedUser={setLoggedUser} />
           )
         }
       />
@@ -85,12 +73,13 @@ function App() {
       <Route
         path="*"
         element={
-          <h1 className="text-center text-3xl mt-20">
-            404 Page Not Found
-          </h1>
+          <div className="min-h-screen flex items-center justify-center bg-slate-900">
+            <h1 className="text-4xl font-bold text-white">
+              404 Page Not Found
+            </h1>
+          </div>
         }
       />
-
     </Routes>
   );
 }
